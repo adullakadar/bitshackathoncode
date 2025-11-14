@@ -1,0 +1,598 @@
+{
+  "employees": [
+    {
+      "eid": "E001",
+      "name": "Priya Sharma",
+      "email": "priya.sharma@synclab.ai",
+      "phone": "+91 98123 45678",
+      "focus_score": 0.84,
+      "work_rhythm": "balanced",
+      "peak_hours": "10:00-14:00",
+      "burnout_risk": "low",
+      "projects": [
+        {
+          "project_id": "P001",
+          "project_name": "Atlas",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E001", "name": "Priya Sharma"},
+            {"eid": "E002", "name": "Ahmed El-Sayed"},
+            {"eid": "E003", "name": "Lucas Martin"},
+            {"eid": "E004", "name": "Mei Lin"}
+          ],
+          "clashes": [
+            {"with_eid": "E003", "with_name": "Lucas Martin", "reason": "Disagreement on backend estimates causing scope vs timeline tension."}
+          ]
+        },
+        {
+          "project_id": "P005",
+          "project_name": "Orion",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E001", "name": "Priya Sharma"},
+            {"eid": "E005", "name": "Sophia Rossi"},
+            {"eid": "E008", "name": "Daniel Okafor"},
+            {"eid": "E009", "name": "Hana Suzuki"}
+          ],
+          "clashes": [
+            {"with_eid": "E009", "with_name": "Hana Suzuki", "reason": "Business requirements updated late requiring sprint replanning."}
+          ]
+        }
+      ]
+    },
+    {
+      "eid": "E002",
+      "name": "Ahmed El-Sayed",
+      "email": "ahmed.elsayed@synclab.ai",
+      "phone": "+20 100 234 5678",
+      "focus_score": 0.78,
+      "work_rhythm": "early-bird",
+      "peak_hours": "08:00-12:00",
+      "burnout_risk": "low",
+      "projects": [
+        {
+          "project_id": "P001",
+          "project_name": "Atlas",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E001", "name": "Priya Sharma"},
+            {"eid": "E002", "name": "Ahmed El-Sayed"},
+            {"eid": "E003", "name": "Lucas Martin"},
+            {"eid": "E004", "name": "Mei Lin"}
+          ],
+          "clashes": []
+        },
+        {
+          "project_id": "P003",
+          "project_name": "Redwood",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E002", "name": "Ahmed El-Sayed"},
+            {"eid": "E008", "name": "Daniel Okafor"},
+            {"eid": "E009", "name": "Hana Suzuki"}
+          ],
+          "clashes": []
+        }
+      ]
+    },
+    {
+      "eid": "E003",
+      "name": "Lucas Martin",
+      "email": "lucas.martin@synclab.ai",
+      "phone": "+55 11 91234 5678",
+      "focus_score": 0.71,
+      "work_rhythm": "night-owl",
+      "peak_hours": "19:00-23:00",
+      "burnout_risk": "medium",
+      "projects": [
+        {
+          "project_id": "P001",
+          "project_name": "Atlas",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E001", "name": "Priya Sharma"},
+            {"eid": "E002", "name": "Ahmed El-Sayed"},
+            {"eid": "E003", "name": "Lucas Martin"},
+            {"eid": "E004", "name": "Mei Lin"}
+          ],
+          "clashes": [
+            {"with_eid": "E001", "with_name": "Priya Sharma", "reason": "Scope expanded mid-sprint without backend capacity alignment."}
+          ]
+        },
+        {
+          "project_id": "P002",
+          "project_name": "Nebula",
+          "completed_on_time": false,
+          "team_members": [
+            {"eid": "E003", "name": "Lucas Martin"},
+            {"eid": "E005", "name": "Sophia Rossi"},
+            {"eid": "E006", "name": "Noah Johnson"},
+            {"eid": "E007", "name": "Aisha Khan"}
+          ],
+          "clashes": []
+        }
+      ]
+    },
+    {
+      "eid": "E004",
+      "name": "Mei Lin",
+      "email": "mei.lin@synclab.ai",
+      "phone": "+65 8123 4567",
+      "focus_score": 0.82,
+      "work_rhythm": "deep-focus",
+      "peak_hours": "09:00-12:00",
+      "burnout_risk": "low",
+      "projects": [
+        {
+          "project_id": "P001",
+          "project_name": "Atlas",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E001", "name": "Priya Sharma"},
+            {"eid": "E002", "name": "Ahmed El-Sayed"},
+            {"eid": "E003", "name": "Lucas Martin"},
+            {"eid": "E004", "name": "Mei Lin"}
+          ],
+          "clashes": []
+        },
+        {
+          "project_id": "P004",
+          "project_name": "Quartz",
+          "completed_on_time": false,
+          "team_members": [
+            {"eid": "E004", "name": "Mei Lin"},
+            {"eid": "E007", "name": "Aisha Khan"},
+            {"eid": "E010", "name": "Carlos Alvarez"}
+          ],
+          "clashes": [
+            {"with_eid": "E010", "with_name": "Carlos Alvarez", "reason": "QA blocked merges over non-reproducible E2E flakes; needed clearer repro steps."}
+          ]
+        }
+      ]
+    },
+    {
+      "eid": "E005",
+      "name": "Sophia Rossi",
+      "email": "sophia.rossi@synclab.ai",
+      "phone": "+39 348 123 4567",
+      "focus_score": 0.76,
+      "work_rhythm": "sprinter",
+      "peak_hours": "11:00-16:00",
+      "burnout_risk": "medium",
+      "projects": [
+        {
+          "project_id": "P002",
+          "project_name": "Nebula",
+          "completed_on_time": false,
+          "team_members": [
+            {"eid": "E003", "name": "Lucas Martin"},
+            {"eid": "E005", "name": "Sophia Rossi"},
+            {"eid": "E006", "name": "Noah Johnson"},
+            {"eid": "E007", "name": "Aisha Khan"}
+          ],
+          "clashes": [
+            {"with_eid": "E006", "with_name": "Noah Johnson", "reason": "Design requested visualizations not feasible with available dataset."}
+          ]
+        },
+        {
+          "project_id": "P005",
+          "project_name": "Orion",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E001", "name": "Priya Sharma"},
+            {"eid": "E005", "name": "Sophia Rossi"},
+            {"eid": "E008", "name": "Daniel Okafor"},
+            {"eid": "E009", "name": "Hana Suzuki"}
+          ],
+          "clashes": []
+        }
+      ]
+    },
+    {
+      "eid": "E006",
+      "name": "Noah Johnson",
+      "email": "noah.johnson@synclab.ai",
+      "phone": "+1 415 555 0134",
+      "focus_score": 0.69,
+      "work_rhythm": "balanced",
+      "peak_hours": "13:00-17:00",
+      "burnout_risk": "medium",
+      "projects": [
+        {
+          "project_id": "P002",
+          "project_name": "Nebula",
+          "completed_on_time": false,
+          "team_members": [
+            {"eid": "E003", "name": "Lucas Martin"},
+            {"eid": "E005", "name": "Sophia Rossi"},
+            {"eid": "E006", "name": "Noah Johnson"},
+            {"eid": "E007", "name": "Aisha Khan"}
+          ],
+          "clashes": [
+            {"with_eid": "E005", "with_name": "Sophia Rossi", "reason": "Frequent data schema changes impacted design handoff."}
+          ]
+        }
+      ]
+    },
+    {
+      "eid": "E007",
+      "name": "Aisha Khan",
+      "email": "aisha.khan@synclab.ai",
+      "phone": "+971 50 123 4567",
+      "focus_score": 0.74,
+      "work_rhythm": "early-bird",
+      "peak_hours": "08:00-11:00",
+      "burnout_risk": "low",
+      "projects": [
+        {
+          "project_id": "P002",
+          "project_name": "Nebula",
+          "completed_on_time": false,
+          "team_members": [
+            {"eid": "E003", "name": "Lucas Martin"},
+            {"eid": "E005", "name": "Sophia Rossi"},
+            {"eid": "E006", "name": "Noah Johnson"},
+            {"eid": "E007", "name": "Aisha Khan"}
+          ],
+          "clashes": []
+        },
+        {
+          "project_id": "P004",
+          "project_name": "Quartz",
+          "completed_on_time": false,
+          "team_members": [
+            {"eid": "E004", "name": "Mei Lin"},
+            {"eid": "E007", "name": "Aisha Khan"},
+            {"eid": "E010", "name": "Carlos Alvarez"}
+          ],
+          "clashes": []
+        }
+      ]
+    },
+    {
+      "eid": "E008",
+      "name": "Daniel Okafor",
+      "email": "daniel.okafor@synclab.ai",
+      "phone": "+234 803 123 4567",
+      "focus_score": 0.81,
+      "work_rhythm": "deep-focus",
+      "peak_hours": "10:00-13:00",
+      "burnout_risk": "low",
+      "projects": [
+        {
+          "project_id": "P003",
+          "project_name": "Redwood",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E002", "name": "Ahmed El-Sayed"},
+            {"eid": "E008", "name": "Daniel Okafor"},
+            {"eid": "E009", "name": "Hana Suzuki"}
+          ],
+          "clashes": []
+        },
+        {
+          "project_id": "P005",
+          "project_name": "Orion",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E001", "name": "Priya Sharma"},
+            {"eid": "E005", "name": "Sophia Rossi"},
+            {"eid": "E008", "name": "Daniel Okafor"},
+            {"eid": "E009", "name": "Hana Suzuki"}
+          ],
+          "clashes": []
+        }
+      ]
+    },
+    {
+      "eid": "E009",
+      "name": "Hana Suzuki",
+      "email": "hana.suzuki@synclab.ai",
+      "phone": "+81 90 1234 5678",
+      "focus_score": 0.77,
+      "work_rhythm": "balanced",
+      "peak_hours": "09:00-13:00",
+      "burnout_risk": "medium",
+      "projects": [
+        {
+          "project_id": "P003",
+          "project_name": "Redwood",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E002", "name": "Ahmed El-Sayed"},
+            {"eid": "E008", "name": "Daniel Okafor"},
+            {"eid": "E009", "name": "Hana Suzuki"}
+          ],
+          "clashes": []
+        },
+        {
+          "project_id": "P005",
+          "project_name": "Orion",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E001", "name": "Priya Sharma"},
+            {"eid": "E005", "name": "Sophia Rossi"},
+            {"eid": "E008", "name": "Daniel Okafor"},
+            {"eid": "E009", "name": "Hana Suzuki"}
+          ],
+          "clashes": [
+            {"with_eid": "E001", "with_name": "Priya Sharma", "reason": "PM requested timeline acceleration without clear scope trade-offs."}
+          ]
+        }
+      ]
+    },
+    {
+      "eid": "E010",
+      "name": "Carlos Alvarez",
+      "email": "carlos.alvarez@synclab.ai",
+      "phone": "+52 55 1234 5678",
+      "focus_score": 0.65,
+      "work_rhythm": "night-owl",
+      "peak_hours": "20:00-00:00",
+      "burnout_risk": "medium",
+      "projects": [
+        {
+          "project_id": "P004",
+          "project_name": "Quartz",
+          "completed_on_time": false,
+          "team_members": [
+            {"eid": "E004", "name": "Mei Lin"},
+            {"eid": "E007", "name": "Aisha Khan"},
+            {"eid": "E010", "name": "Carlos Alvarez"}
+          ],
+          "clashes": [
+            {"with_eid": "E004", "with_name": "Mei Lin", "reason": "Flaky E2E tests due to unstable UI selectors."}
+          ]
+        }
+      ]
+    },
+    {
+      "eid": "E011",
+      "name": "Javier Morales",
+      "email": "javier.morales@synclab.ai",
+      "phone": "+34 612 345 678",
+      "focus_score": 0.79,
+      "work_rhythm": "balanced",
+      "peak_hours": "10:00-15:00",
+      "burnout_risk": "low",
+      "projects": [
+        {
+          "project_id": "P006",
+          "project_name": "Aquila",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E011", "name": "Javier Morales"},
+            {"eid": "E012", "name": "Leila Haddad"},
+            {"eid": "E013", "name": "Yusuf Demir"},
+            {"eid": "E014", "name": "Emily Chen"}
+          ],
+          "clashes": []
+        }
+      ]
+    },
+    {
+      "eid": "E012",
+      "name": "Leila Haddad",
+      "email": "leila.haddad@synclab.ai",
+      "phone": "+212 612345678",
+      "focus_score": 0.72,
+      "work_rhythm": "sprinter",
+      "peak_hours": "14:00-18:00",
+      "burnout_risk": "medium",
+      "projects": [
+        {
+          "project_id": "P006",
+          "project_name": "Aquila",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E011", "name": "Javier Morales"},
+            {"eid": "E012", "name": "Leila Haddad"},
+            {"eid": "E013", "name": "Yusuf Demir"},
+            {"eid": "E014", "name": "Emily Chen"}
+          ],
+          "clashes": [
+            {"with_eid": "E013", "with_name": "Yusuf Demir", "reason": "Debate over speed vs code quality led to friction in reviews."}
+          ]
+        }
+      ]
+    },
+    {
+      "eid": "E013",
+      "name": "Yusuf Demir",
+      "email": "yusuf.demir@synclab.ai",
+      "phone": "+90 530 123 4567",
+      "focus_score": 0.68,
+      "work_rhythm": "night-owl",
+      "peak_hours": "21:00-01:00",
+      "burnout_risk": "medium",
+      "projects": [
+        {
+          "project_id": "P006",
+          "project_name": "Aquila",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E011", "name": "Javier Morales"},
+            {"eid": "E012", "name": "Leila Haddad"},
+            {"eid": "E013", "name": "Yusuf Demir"},
+            {"eid": "E014", "name": "Emily Chen"}
+          ],
+          "clashes": [
+            {"with_eid": "E012", "with_name": "Leila Haddad", "reason": "Push for stricter code standards perceived as slowing delivery."}
+          ]
+        }
+      ]
+    },
+    {
+      "eid": "E014",
+      "name": "Emily Chen",
+      "email": "emily.chen@synclab.ai",
+      "phone": "+1 604 555 0199",
+      "focus_score": 0.83,
+      "work_rhythm": "early-bird",
+      "peak_hours": "07:00-11:00",
+      "burnout_risk": "low",
+      "projects": [
+        {
+          "project_id": "P006",
+          "project_name": "Aquila",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E011", "name": "Javier Morales"},
+            {"eid": "E012", "name": "Leila Haddad"},
+            {"eid": "E013", "name": "Yusuf Demir"},
+            {"eid": "E014", "name": "Emily Chen"}
+          ],
+          "clashes": []
+        }
+      ]
+    },
+    {
+      "eid": "E015",
+      "name": "Omar Farouk",
+      "email": "omar.farouk@synclab.ai",
+      "phone": "+20 122 345 6789",
+      "focus_score": 0.66,
+      "work_rhythm": "balanced",
+      "peak_hours": "12:00-16:00",
+      "burnout_risk": "medium",
+      "projects": [
+        {
+          "project_id": "P007",
+          "project_name": "Vega",
+          "completed_on_time": false,
+          "team_members": [
+            {"eid": "E015", "name": "Omar Farouk"},
+            {"eid": "E016", "name": "Greta Novak"},
+            {"eid": "E017", "name": "Mina Park"}
+          ],
+          "clashes": [
+            {"with_eid": "E016", "with_name": "Greta Novak", "reason": "Sprint commitment exceeded realistic throughput."}
+          ]
+        }
+      ]
+    },
+    {
+      "eid": "E016",
+      "name": "Greta Novak",
+      "email": "greta.novak@synclab.ai",
+      "phone": "+48 600 123 456",
+      "focus_score": 0.75,
+      "work_rhythm": "deep-focus",
+      "peak_hours": "09:00-12:00",
+      "burnout_risk": "low",
+      "projects": [
+        {
+          "project_id": "P007",
+          "project_name": "Vega",
+          "completed_on_time": false,
+          "team_members": [
+            {"eid": "E015", "name": "Omar Farouk"},
+            {"eid": "E016", "name": "Greta Novak"},
+            {"eid": "E017", "name": "Mina Park"}
+          ],
+          "clashes": [
+            {"with_eid": "E015", "with_name": "Omar Farouk", "reason": "Scope creep introduced late in sprint without buffer."}
+          ]
+        }
+      ]
+    },
+    {
+      "eid": "E017",
+      "name": "Mina Park",
+      "email": "mina.park@synclab.ai",
+      "phone": "+82 10-1234-5678",
+      "focus_score": 0.71,
+      "work_rhythm": "sprinter",
+      "peak_hours": "10:00-14:00",
+      "burnout_risk": "medium",
+      "projects": [
+        {
+          "project_id": "P007",
+          "project_name": "Vega",
+          "completed_on_time": false,
+          "team_members": [
+            {"eid": "E015", "name": "Omar Farouk"},
+            {"eid": "E016", "name": "Greta Novak"},
+            {"eid": "E017", "name": "Mina Park"}
+          ],
+          "clashes": []
+        }
+      ]
+    },
+    {
+      "eid": "E018",
+      "name": "Raj Patel",
+      "email": "raj.patel@synclab.ai",
+      "phone": "+44 7700 900123",
+      "focus_score": 0.86,
+      "work_rhythm": "balanced",
+      "peak_hours": "09:00-13:00",
+      "burnout_risk": "low",
+      "projects": [
+        {
+          "project_id": "P008",
+          "project_name": "Helios",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E018", "name": "Raj Patel"},
+            {"eid": "E019", "name": "Zanele Ndlovu"},
+            {"eid": "E020", "name": "Thiago Silva"}
+          ],
+          "clashes": [
+            {"with_eid": "E019", "with_name": "Zanele Ndlovu", "reason": "Timezone overlap caused misaligned handoffs initially."}
+          ]
+        }
+      ]
+    },
+    {
+      "eid": "E019",
+      "name": "Zanele Ndlovu",
+      "email": "zanele.ndlovu@synclab.ai",
+      "phone": "+27 82 123 4567",
+      "focus_score": 0.73,
+      "work_rhythm": "early-bird",
+      "peak_hours": "08:00-12:00",
+      "burnout_risk": "low",
+      "projects": [
+        {
+          "project_id": "P008",
+          "project_name": "Helios",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E018", "name": "Raj Patel"},
+            {"eid": "E019", "name": "Zanele Ndlovu"},
+            {"eid": "E020", "name": "Thiago Silva"}
+          ],
+          "clashes": [
+            {"with_eid": "E018", "with_name": "Raj Patel", "reason": "Missed standups due to DST change; resolved with overlap policy."}
+          ]
+        }
+      ]
+    },
+    {
+      "eid": "E020",
+      "name": "Thiago Silva",
+      "email": "thiago.silva@synclab.ai",
+      "phone": "+55 21 99876 5432",
+      "focus_score": 0.67,
+      "work_rhythm": "night-owl",
+      "peak_hours": "18:00-22:00",
+      "burnout_risk": "medium",
+      "projects": [
+        {
+          "project_id": "P008",
+          "project_name": "Helios",
+          "completed_on_time": true,
+          "team_members": [
+            {"eid": "E018", "name": "Raj Patel"},
+            {"eid": "E019", "name": "Zanele Ndlovu"},
+            {"eid": "E020", "name": "Thiago Silva"}
+          ],
+          "clashes": []
+        }
+      ]
+    }
+  ]
+}
+
+

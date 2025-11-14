@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Message Hub - Professional Messaging Interface</title>
+
+        <style>
+                :root {
+                        --bg: linear-gradient(180deg, #e6eef8 0%, #f6f9ff 100%);
+                        /* stronger contrasting page background */
+                        --card-bg: #ffffff;
+                        --text: #0b1220;
+                        /* deep charcoal for strong contrast */
+                        --muted: #6b7280;
+                        /* muted text */
+                        --primary: #0b5fff;
+                        /* vibrant blue */
+                        --primary-strong: #074bd6;
+                        --accent: #00bfa6;
+                        /* teal accent */
+                        --border: #e6edff;
+                        /* soft bluish border */
+                }
+
+                /* Toggle */
+                .toggle-row { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+                .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+                .switch input { opacity: 0; width: 0; height: 0; }
+                .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e5e7eb; transition: .2s; border-radius: 999px; }
+                .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .2s; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+                input:checked + .slider { background-color: var(--primary); }
+                input:checked + .slider:before { transform: translateX(20px); }
+
+                /* Reset */
+                * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                }
+
+                body {
+                        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                        background: var(--bg);
+                        color: var(--text);
+                        padding: 36px;
+                        /* a bit more breathing room so the card sits off the page */
+                        line-height: 1.6;
+                }
+
+                .container {
+                        max-width: 900px;
+                        margin: 0 auto;
+                        /* ensure the card stands out from the background */
+                        padding: 8px;
+                }
+
+                /* Main Card */
+                .main-card {
+                        background: var(--card-bg);
+                        border-radius: 12px;
+                        border: 1px solid rgba(11, 17, 32, 0.04);
+                        /* slightly darker border to separate from background */
+                        box-shadow: 0 12px 40px rgba(11, 17, 32, 0.10);
+                        /* stronger shadow so card is clearly separated */
+                        overflow: hidden;
+                }
+
+                /* Header */
+                .header {
+                        padding: 24px 28px;
+                        border-bottom: 1px solid rgba(11, 17, 32, 0.05);
+                        background: linear-gradient(90deg, rgba(11, 95, 255, 0.06), rgba(0, 191, 166, 0.03));
+                }
+
+                .header-content {
+                        display: flex;
+                        align-items: center;
+                        gap: 14px;
+                }
+
+                .header-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 8px;
+                        background: var(--primary);
+                        color: #ffffff;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 18px;
+                        box-shadow: 0 4px 14px rgba(11, 95, 255, 0.18);
+                }
+
+                .header-title {
+                        font-size: 20px;
+                        font-weight: 700;
+                        color: var(--primary-strong);
+                        letter-spacing: -0.01em;
+                }
+
+                .header-subtitle {
+                        font-size: 13px;
+                        color: var(--muted);
+                }
+
+                /* Section Labels */
+                .section-label {
+                        font-size: 13px;
+                        font-weight: 700;
+                        color: var(--text);
+                        margin-bottom: 10px;
+                        letter-spacing: 0.03em;
+                        text-transform: uppercase;
+                }
+
+                /* Conversation Area */
+                .conversation-section {
+                        padding: 24px 28px;
+                        border-bottom: 1px solid rgba(11, 17, 32, 0.04);
+                }
+
+                #replies {
+                        min-height: 240px;
+                        max-height: 420px;
+                        background: linear-gradient(180deg, #ffffff, #f8fbff);
+                        border: 1px solid var(--border);
+                        border-radius: 8px;
+                        padding: 20px;
+                        overflow-y: auto;
+                }
+
+                #replies::-webkit-scrollbar {
+                        width: 7px;
+                }
+
+                #replies::-webkit-scrollbar-thumb {
+                        background: rgba(11, 17, 32, 0.12);
+                        border-radius: 4px;
+                }
+
+                .empty-state {
+                        text-align: center;
+                        color: var(--muted);
+                }
+
+                .empty-state-icon {
+                        width: 48px;
+                        height: 48px;
+                        border-radius: 50%;
+                        background: linear-gradient(180deg, rgba(11, 95, 255, 0.12), rgba(0, 191, 166, 0.06));
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin: 0 auto 10px;
+                        font-size: 22px;
+                        color: var(--primary-strong);
+                }
+
+                /* Composer Section */
+                .composer-section {
+                        padding: 24px 28px;
+                }
+
+                .form-label {
+                        font-size: 13px;
+                        font-weight: 700;
+                        margin-bottom: 6px;
+                        color: var(--text);
+                }
+
+                #message {
+                        width: 100%;
+                        min-height: 120px;
+                        border-radius: 8px;
+                        padding: 12px 16px;
+                        border: 1px solid rgba(11, 17, 32, 0.08);
+                        font-size: 14px;
+                        resize: vertical;
+                        background: #ffffff;
+                        color: var(--text);
+                        transition: border 0.15s ease, box-shadow 0.15s ease;
+                }
+
+                #message:focus {
+                        outline: none;
+                        border-color: var(--primary);
+                        box-shadow: 0 6px 18px rgba(11, 95, 255, 0.08);
+                }
+
+                #message::placeholder {
+                        color: #9aa4bb;
+                }
+
+                /* Upload Zone */
+                .upload-actions {
+                        display: grid;
+                        grid-template-columns: 1fr auto;
+                        gap: 16px;
+                        margin-top: 20px;
+                        align-items: end;
+                }
+
+                #upload-zone {
+                        border: 2px dashed var(--border);
+                        padding: 24px;
+                        border-radius: 8px;
+                        background: #ffffff;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.18s ease;
+                }
+
+                #upload-zone:hover {
+                        background: linear-gradient(180deg, #f8fbff, #ffffff);
+                        border-color: var(--primary-strong);
+                }
+
+                #upload-zone.drag-over {
+                        background: #f0f7ff;
+                        border-color: var(--primary-strong);
+                        box-shadow: 0 10px 30px rgba(11, 95, 255, 0.06);
+                }
+
+                .upload-icon {
+                        font-size: 20px;
+                        margin-bottom: 8px;
+                        color: var(--primary);
+                }
+
+                .upload-text {
+                        font-size: 14px;
+                        color: var(--text);
+                }
+
+                .upload-text-highlight {
+                        text-decoration: underline;
+                        font-weight: 700;
+                        color: var(--primary-strong);
+                }
+
+                .upload-hint {
+                        font-size: 12px;
+                        color: var(--muted);
+                        margin-top: 2px;
+                }
+
+                #documents {
+                        display: none;
+                }
+
+                /* Send Button */
+                #send {
+                        padding: 12px 32px;
+                        background: var(--primary);
+                        color: #ffffff;
+                        border: none;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        font-weight: 700;
+                        cursor: pointer;
+                        transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+                        box-shadow: 0 8px 24px rgba(11, 95, 255, 0.12);
+                }
+
+                #send:hover {
+                        background: var(--primary-strong);
+                        transform: translateY(-1px);
+                }
+
+                #send:active {
+                        transform: translateY(1px);
+                        box-shadow: none;
+                }
+
+                /* Responsive */
+                @media (max-width: 768px) {
+                        .upload-actions {
+                                grid-template-columns: 1fr;
+                        }
+
+                        #send {
+                                width: 100%;
+                        }
+                }
+        </style>
+</head>
+
+<body>
+
+        <div class="container">
+                <div class="main-card">
+
+                        <!-- Header -->
+                        <header class="header">
+                                <div class="header-content">
+                                        <div class="header-icon">💬</div>
+                                        <div>
+                                                <h1 class="header-title">Message Hub</h1>
+                                                <p class="header-subtitle">Professional messaging and document sharing
+                                                </p>
+                                        </div>
+                                </div>
+                        </header>
+
+                        <!-- Conversation -->
+                        <section class="conversation-section">
+                                <div class="section-label">Conversation</div>
+
+                                <div id="replies">
+                                        <div class="empty-state">
+                                                <div class="empty-state-icon">💬</div>
+                                                <p>Your conversation will appear here...</p>
+                                        </div>
+                                </div>
+                        </section>
+
+                        <!-- Composer -->
+                        <section class="composer-section">
+                                <label class="form-label" for="message">Your Message</label>
+                                <textarea id="message" placeholder="Type your message here..."></textarea>
+
+                                <div class="upload-actions">
+                                        <div>
+                                                <label class="form-label">Upload Documents</label>
+                                                <div id="upload-zone">
+                                                        <div class="upload-icon">📎</div>
+                                                        <p class="upload-text">
+                                                                <span id="upload-status">Drop files or <span
+                                                                                class="upload-text-highlight">browse</span></span>
+                                                        </p>
+                                                        <p class="upload-hint">Multiple files supported</p>
+                                                        <div id="file-list" class="file-list"></div>
+                                                </div>
+                                                <input type="file" id="documents" name="documents" multiple>
+
+                                                <div class="toggle-row" title="Include employees.json context in the request">
+                                                        <label class="form-label" style="margin:0; font-weight:600;">Include employees.json</label>
+                                                        <label class="switch">
+                                                                <input type="checkbox" id="include-employees" checked>
+                                                                <span class="slider"></span>
+                                                        </label>
+                                                </div>
+                                        </div>
+
+                                        <button id="send">Send</button>
+                                </div>
+                        </section>
+
+                </div>
+        </div>
+
+        <!-- JS -->
+        <script>
+                const uploadZone = document.getElementById("upload-zone");
+                const fileInput = document.getElementById("documents");
+                const fileList = document.getElementById("file-list");
+                const uploadStatus = document.getElementById("upload-status");
+                const replies = document.getElementById("replies");
+                const sendBtn = document.getElementById("send");
+                const messageEl = document.getElementById("message");
+                const includeEmployeesEl = document.getElementById("include-employees");
+
+                uploadZone.addEventListener("click", () => fileInput.click());
+
+                uploadZone.addEventListener("dragover", (e) => {
+                        e.preventDefault();
+                        uploadZone.classList.add("drag-over");
+                });
+
+                uploadZone.addEventListener("dragleave", () => {
+                        uploadZone.classList.remove("drag-over");
+                });
+
+                uploadZone.addEventListener("drop", (e) => {
+                        e.preventDefault();
+                        uploadZone.classList.remove("drag-over");
+                        fileInput.files = e.dataTransfer.files;
+                        handleFiles(fileInput.files);
+                });
+
+                fileInput.addEventListener("change", () => handleFiles(fileInput.files));
+
+                function handleFiles(files) {
+                        if (files.length > 0) {
+                                const names = Array.from(files).map(f => f.name).join(", ");
+                                fileList.textContent = `${files.length} file(s): ${names}`;
+                                uploadStatus.innerHTML = `<span class="upload-text-highlight">${files.length} selected</span>`;
+                        } else {
+                                fileList.textContent = "";
+                                uploadStatus.innerHTML = `Drop files or <span class="upload-text-highlight">browse</span>`;
+                        }
+                }
+
+                async function sendToChat() {
+                        const files = fileInput.files;
+                        const message = messageEl.value.trim();
+                        if ((!files || files.length === 0) && !message) {
+                                alert("Type a message or attach at least one file.");
+                                return;
+                        }
+
+                        // Reset conversation context for this new message
+                        replies.innerHTML = "";
+
+                        const formData = new FormData();
+                        formData.append("message", message);
+                        formData.append("includeEmployees", includeEmployeesEl && includeEmployeesEl.checked ? "true" : "false");
+                        for (const f of files) formData.append("documents", f);
+
+                        sendBtn.disabled = true;
+                        sendBtn.textContent = "Sending...";
+                        try {
+                                const res = await fetch("/chat", { method: "POST", body: formData });
+                                const data = await res.json();
+                                if (!res.ok || !data.ok) throw new Error(data?.error ? JSON.stringify(data.error) : `HTTP ${res.status}`);
+
+                                const msg = document.createElement("div");
+                                msg.innerHTML = `<div style="margin-bottom:6px"><strong>Sent:</strong> ${message || '(no text)'}${files.length ? ` | Files: ${Array.from(files).map(f=>f.name).join(', ')}` : ''}</div><div><strong>Gemini:</strong> ${data.reply ? data.reply.replace(/\n/g,'<br>') : '(no reply text)'}</div>`;
+                                replies.appendChild(msg);
+
+                                // Reset UI
+                                fileInput.value = "";
+                                handleFiles(fileInput.files);
+                                // Clear message to ensure fresh context next time
+                                messageEl.value = '';
+                        } catch (err) {
+                                const msg = document.createElement("div");
+                                msg.style.color = "#b91c1c";
+                                msg.innerHTML = `<strong>Error:</strong> ${err.message}`;
+                                replies.appendChild(msg);
+                        } finally {
+                                sendBtn.disabled = false;
+                                sendBtn.textContent = "Send";
+                        }
+                }
+
+                sendBtn.addEventListener("click", sendToChat);
+        </script>
+
+</body>
+
+</html>
