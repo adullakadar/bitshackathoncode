@@ -106,6 +106,3 @@ BitsTechFest/
 
 ## Security
 - Keep your `OPENROUTER_API_KEY` private and out of version control.
-
-## License
-MIT or your preferred license.
