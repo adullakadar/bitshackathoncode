@@ -4,15 +4,25 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { fetch } = require('undici');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const SYSTEM_PROMPT = process.env.SYSTEM_PROMPT || 'You are a helpful assistant. When returning any employees table, output it as a clean Markdown table with an EID column.';
 
-// Stateless, memory-only storage for uploads (no disk persistence)
-const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 8 * 1024 * 1024 } });
+// Stateless, memory-only storage for uploads (no disk persistence) and .txt-only filter
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 8 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const isTxt = (file.mimetype === 'text/plain') || (file.originalname || '').toLowerCase().endsWith('.txt');
+    cb(null, !!isTxt);
+  }
+});
 
 // Serve static files (index.html, etc.)
 app.use(express.static(__dirname));
+app.use(express.json());
 
 // Health check
 app.get('/health', (req, res) => res.json({ ok: true }));
@@ -25,6 +35,9 @@ app.post('/upload', upload.array('documents'), (req, res) => {
     size: f.size,
     mimetype: f.mimetype
   }));
+  if (!files.length) {
+    return res.status(400).json({ ok: false, error: 'Only .txt files are accepted.' });
+  }
   res.json({ ok: true, files, persisted: false });
 });
 
@@ -39,6 +52,10 @@ app.post('/chat', upload.array('documents'), async (req, res) => {
     const userMessage = (req.body && req.body.message) || '';
     const includeEmployees = (req.body && String(req.body.includeEmployees).toLowerCase() === 'true');
     const files = req.files || [];
+    if (Array.isArray(req.files) && req.files.length === 0 && (req.body || {}) ) {
+      // If user attempted non-txt files, multer filtered them out
+      // Proceed with text-only context, but note nothing was attached
+    }
 
     // Build OpenAI-compatible messages with safeguards
     const contentParts = [];
@@ -101,7 +118,10 @@ app.post('/chat', upload.array('documents'), async (req, res) => {
     // OpenRouter chat completions
     const url = `https://openrouter.ai/api/v1/chat/completions`;
     const model = process.env.OPENROUTER_MODEL || 'qwen/qwen3-coder:free';
-    const messages = [{ role: 'user', content: contentParts }];
+    const messages = [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user', content: contentParts }
+    ];
     const payload = { model, messages };
 
     async function fetchWithRetry() {
@@ -155,6 +175,52 @@ app.post('/chat', upload.array('documents'), async (req, res) => {
       files: (files || []).map(f => ({ originalname: f.originalname })),
       diagnostics
     });
+  } catch (err) {
+    return res.status(500).json({ ok: false, error: err?.message || 'Unknown error' });
+  }
+});
+
+app.post('/notify-add-to-project', async (req, res) => {
+  try {
+    const { eids, projectName } = req.body || {};
+    if (!Array.isArray(eids) || !eids.length || !projectName) {
+      return res.status(400).json({ ok: false, error: 'Missing eids or projectName' });
+    }
+    const employeesPath = path.join(__dirname, 'employees.json');
+    if (!fs.existsSync(employeesPath)) {
+      return res.status(500).json({ ok: false, error: 'employees.json not found' });
+    }
+    let employees;
+    try {
+      const parsed = JSON.parse(fs.readFileSync(employeesPath, 'utf8'));
+      employees = Array.isArray(parsed?.employees) ? parsed.employees : parsed;
+      if (!Array.isArray(employees)) employees = [];
+    } catch {
+      employees = [];
+    }
+    const selected = eids.map(eid => employees.find(e => e.eid === eid)).filter(Boolean);
+    if (!selected.length) {
+      return res.status(404).json({ ok: false, error: 'No matching employees by EID' });
+    }
+    const host = process.env.SMTP_HOST;
+    const port = Number(process.env.SMTP_PORT || 587);
+    const secure = String(process.env.SMTP_SECURE || 'false').toLowerCase() === 'true';
+    const user = process.env.SMTP_USER;
+    const pass = process.env.SMTP_PASS;
+    const from = process.env.SMTP_FROM || user;
+    if (!host || !user || !pass || !from) {
+      return res.status(501).json({ ok: false, error: 'Email not configured' });
+    }
+    const transporter = nodemailer.createTransport({ host, port, secure, auth: { user, pass } });
+    const sendPromises = selected.map(emp => {
+      const to = emp.email;
+      const subject = `Added to project: ${projectName}`;
+      const text = `Hello ${emp.name},\n\nYou have been added to the project: ${projectName}.\n\nRegards,\nProject Admin`;
+      return transporter.sendMail({ from, to, subject, text });
+    });
+    const results = await Promise.allSettled(sendPromises);
+    const summary = results.map((r, i) => ({ eid: selected[i].eid, status: r.status }));
+    return res.json({ ok: true, sent: summary });
   } catch (err) {
     return res.status(500).json({ ok: false, error: err?.message || 'Unknown error' });
   }

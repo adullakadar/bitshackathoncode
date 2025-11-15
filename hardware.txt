@@ -1,0 +1,1 @@
+LED Chaser Circuit: A foundational project using a 555 timer IC and a decade counter (like the 4017 IC) to create a simple, sequential light display. This is great for learning about basic components and soldering.
